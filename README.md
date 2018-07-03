@@ -5,4 +5,4 @@ A Python application that will utilize the Stack Exchange API to find recent que
 There are plans to incorporate other sites such as Reddit, Quora. 
 
 # License
-Karma Farma is licensed under the MIT license. See the LICENSE for details.
+Karma Farma is licensed under the MIT license. See the [LICENSE](LICENSE) for details.
