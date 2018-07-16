@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <main role="main">
+        <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Welcome to Karma Farma!</h1>
+            <p>The place to farm karma as fast as possible.</p>
+        </div>
+        </div>
+
+        <div class="container">
+        	<div class="row">
+	            <div class="col-md-4">
+		            <h2>Stack Exchange</h2>
+		            <p>Go farm karma at any of the Stack Exchange sites!</p>
+		            <p><a class="btn btn-primary" href="/stackexchange" role="button">Farm »</a></p>
+	            </div>
+	            <div class="col-md-4">
+		            <h2>Reddit</h2>
+		            <p>Nothing like farming karma at the front page of the Internet!</p>
+		            <p><a class="btn btn-primary" href="/reddit" role="button">Farm »</a></p>
+	            </div>
+        	</div>
+		</div>
+        <hr>    
+    </main>   
+
+{% endblock %}
