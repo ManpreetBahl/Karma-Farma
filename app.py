@@ -20,8 +20,11 @@ def home():
 #====================Home Route=======================
 @app.route("/stackexchange", methods=["GET", "POST"])
 def stackexchange():
-    siteURL, sites = presenter.getStackExchange()
-    return render_template(siteURL, sites=sites)
+    if request.method == "GET":
+        siteURL, sites = presenter.getStackExchange()
+        return render_template(siteURL, sites=sites)
+    else:
+        print(request.form)
 #=====================================================
 
 #=================Start Server========================
