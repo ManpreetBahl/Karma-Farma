@@ -40,18 +40,52 @@ class AppModel(IModel):
         return results
 
     def getSites(self):
-        return self.makeAPICall(url=self.baseURL + "sites", params={"key": APIKEY, "filter": "!6Oe*vJ1yH.MGi"})
+        page = 1
+        results = []
+        hasMore = True
+        params={"key": APIKEY, "filter": "!6Oe*vJ1yH.MGi"}
+        while hasMore:
+            params['page'] = page
+            res = requests.get(self.baseURL + "sites", params=params)
+            if res.status_code == 200:
+                resJSON = res.json()
+                for item in resJSON['items']:
+                    item['name'] = html.parser.unescape(item['name'])
+                    results.append(item)
+                hasMore = resJSON['has_more']
+                page += 1
+            else:
+                print("An error has occured when making API call")
+                sys.exit(1)
+        return results
     
-    def getNoAnswerQuestions(self, site, minimum, maximum):
+    def getNoAnswerQuestions(self, site):
+        page = 1
+        results = []
+        hasMore = True
         params = {
             "key": APIKEY,
             "order": "desc",
             "sort": "creation",
             "site": site,
-            "min": minimum,
-            "max": maximum
+            "fromdate": 1531872000
         }
-        return self.makeAPICall(url=self.baseURL + "/questions/no-answers", params=params)
+        while hasMore:
+            params['page'] = page
+            res = requests.get(self.baseURL + "questions/no-answers", params=params)
+            if res.status_code == 200:
+                resJSON = res.json()
+                for item in resJSON['items']:
+                    item['title'] = html.parser.unescape(item['title'])
+                    results.append(item)
+                #hasMore = resJSON['has_more']
+                hasMore = False
+                page += 1
+            else:
+                print("An error has occured when making API call")
+                sys.exit(1)
+
+        return results
 
 if __name__ == "__main__":
     model = AppModel(None)

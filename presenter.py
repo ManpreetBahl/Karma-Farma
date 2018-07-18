@@ -19,5 +19,5 @@ class Presenter:
     def getSites(self):
         return self.model.getSites()
     
-    def getNoAnswerQuestions(self, site, minimum, maximum):
-        return self.model.getNoAnswerQuestions(site, minimum, maximum)
+    def getNoAnswerQuestions(self, site):
+        return ('stackexchange.html', self.model.getNoAnswerQuestions(site))
