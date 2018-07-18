@@ -12,6 +12,9 @@ class Presenter:
     
     def home(self):
         return 'home.html'
+    
+    def getStackExchange(self):
+        return ('stackexchange.html', self.getSites())
 
     def getSites(self):
         return self.model.getSites()

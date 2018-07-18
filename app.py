@@ -15,7 +15,13 @@ presenter = Presenter(model)
 @app.route("/")
 def home():
     return render_template(presenter.home())
+#=====================================================
 
+#====================Home Route=======================
+@app.route("/stackexchange", methods=["GET", "POST"])
+def stackexchange():
+    siteURL, sites = presenter.getStackExchange()
+    return render_template(siteURL, sites=sites)
 #=====================================================
 
 #=================Start Server========================
