@@ -4,6 +4,7 @@ import json
 import sys
 from defines import APIKEY
 import html.parser
+from datetime import datetime,timezone,time,timedelta
 
 class AppModel(IModel):
     baseURL = "https://api.stackexchange.com/2.2/"
@@ -68,8 +69,9 @@ class AppModel(IModel):
             "order": "desc",
             "sort": "creation",
             "site": site,
-            "fromdate": 1531872000
+            "min": int((datetime.now() - timedelta(hours=12)).timestamp())
         }
+
         while hasMore:
             params['page'] = page
             res = requests.get(self.baseURL + "questions/no-answers", params=params)
@@ -77,9 +79,10 @@ class AppModel(IModel):
                 resJSON = res.json()
                 for item in resJSON['items']:
                     item['title'] = html.parser.unescape(item['title'])
+                    item['creation_date'] = datetime.fromtimestamp(item['creation_date'], timezone.utc).astimezone().strftime("%m-%d-%Y %H:%M:%S")
                     results.append(item)
-                #hasMore = resJSON['has_more']
-                hasMore = False
+                hasMore = resJSON['has_more']
+                #hasMore = False
                 page += 1
             else:
                 print("An error has occured when making API call")

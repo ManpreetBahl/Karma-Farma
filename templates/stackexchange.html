@@ -2,7 +2,7 @@
 
 {% block body %}
     <main role="main">
-        <form method="POST" action="/stackexchange">
+        <form id="karmaForm" method="POST" action="/stackexchange">
             <div class="form-group">
                 <label for="site">Please choose a site</label>
                 <select class="form-control" id="site" name="site">
@@ -12,30 +12,10 @@
                     {% endfor %}
                 </select>
             </div>
-            <!--
-            <div class="form-group">
-                <label for="minDate">Please choose a start date</label>
-                <input class="form-control" type="date" id="minDate" name="minDate">
-            </div>
-            <div class="form-group">
-                <label for="minTime">Please choose a start time</label>
-                <input class="form-control" type="time" id="minTime" name="minTime">
-            </div>
-            <div class="form-group">
-                <label for="maxDate">Please choose a end date</label>
-                <input class="form-control" type="date" id="maxDate" name="maxDate">
-            </div>
-            <div class="form-group">
-                <label for="maxTime">Please choose a end time</label>
-                <input class="form-control" type="time" id="maxTime" name="maxTime">
-            </div>
-            <div class="form-group">
-                <label for="minRep">Please choose a end time</label>
-                <input class="form-control" type="number" id="minRep" name="minRep" min="0">
-            </div>
-            -->
-            <button type="submit" class="btn btn-primary">Farm</button>
+            <button type="submit" id="farm" class="btn btn-primary">Farm</button>
         </form>
+        {% if questions %}
+        <hr>
         <table class="table" id="farmTable">
             <thead>
                 <tr>
@@ -45,19 +25,15 @@
                 </tr>
             </thead>
             <tbody>
-                {% for q in questions %}
-                <tr>
-                    <td>{{q.title}}</td>
-                    <td>{{q.view_count}}</td>
-                    <td>{{q.creation_date}}</td>
-                </tr>
+                {%for q in questions%}
+                    <tr>
+                        <td><a target="_blank" href="{{q.link}}">{{q.title}}</a></td>
+                        <td>{{q.view_count}}</td>
+                        <td>{{q.creation_date}}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </main>   
-    <script>
-        $(document).ready(function () {
-            $('#farmTable').DataTable();
-        });
-    </script>
+        {% endif %}
+    </main>
 {% endblock %}

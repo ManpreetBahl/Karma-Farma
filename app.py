@@ -1,5 +1,5 @@
 #======================Imports========================
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 from model import AppModel
 from presenter import Presenter
@@ -9,6 +9,7 @@ from presenter import Presenter
 app = Flask(__name__)
 model = AppModel(app)
 presenter = Presenter(model)
+app.sites = presenter.getSites()
 #=====================================================
 
 #====================Home Route=======================
@@ -17,18 +18,15 @@ def home():
     return render_template(presenter.home())
 #=====================================================
 
-#====================Home Route=======================
+#====================Stack Exchange Route=======================
 @app.route("/stackexchange", methods=["GET", "POST"])
 def stackexchange():
-    sites = None
     if request.method == "GET":
-        siteURL, sites = presenter.getStackExchange()
-        return render_template(siteURL, sites=sites)
+        return render_template(presenter.getStackExchange(), sites=app.sites, questions=None)
     else:
         url, questions = presenter.getNoAnswerQuestions(request.form['site'])
-        print(questions)
-        return render_template(url, sites={}, questions=questions)
-        
+        return render_template(url, sites=app.sites, questions=questions)
+
 #=====================================================
 
 #=================Start Server========================
