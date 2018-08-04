@@ -25,7 +25,7 @@ def stackexchange():
         return render_template(presenter.getStackExchange(), sites=app.sites, questions=None)
     else:
         url, questions = presenter.getNoAnswerQuestions(request.form['site'])
-        return render_template(url, sites=app.sites, questions=questions)
+        return render_template(url, sites=app.sites, best=questions[0], good=questions[1], okay=questions[2])
 
 #=====================================================
 

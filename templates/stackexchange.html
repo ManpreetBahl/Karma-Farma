@@ -14,26 +14,79 @@
             </div>
             <button type="submit" id="farm" class="btn btn-primary">Farm</button>
         </form>
-        {% if questions %}
+        {% if best %}
         <hr>
-        <table class="table" id="farmTable">
+        <h2>Best Questions for Karma</h2>
+        <table class="table" id="bestTable">
             <thead>
                 <tr>
                     <th>Question</th>
+                    <th>Questioner</th>
                     <th>Views</th>
                     <th>Created On</th>
                 </tr>
             </thead>
             <tbody>
-                {%for q in questions%}
+                {%for b in best%}
                     <tr>
-                        <td><a target="_blank" href="{{q.link}}">{{q.title}}</a></td>
-                        <td>{{q.view_count}}</td>
-                        <td>{{q.creation_date}}</td>
+                        <td><a target="_blank" href="{{b.link}}">{{b.title}}</a></td>
+                        <td><a target="_blank" href="{{b.owner.link}}">{{b.owner.display_name}}</a></td>
+                        <td>{{b.view_count}}</td>
+                        <td>{{b.creation_date}}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
         {% endif %}
+        {% if good %}
+        <hr>
+        <h2>Good Questions for Karma</h2>
+        <table class="table" id="goodTable">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Questioner</th>
+                    <th>Views</th>
+                    <th>Created On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for g in good%}
+                    <tr>
+                        <td><a target="_blank" href="{{g.link}}">{{g.title}}</a></td>
+                        <td><a target="_blank" href="{{g.owner.link}}">{{g.owner.display_name}}</a></td>
+                        <td>{{g.view_count}}</td>
+                        <td>{{g.creation_date}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if okay %}
+        <hr>
+        <h2>Potential Questions for Karma</h2>
+        <table class="table" id="okayTable">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Questioner</th>
+                    <th>Views</th>
+                    <th>Created On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for o in okay %}
+                    <tr>
+                        <td><a target="_blank" href="{{o.link}}">{{o.title}}</a></td>
+                        <td><a target="_blank" href="{{o.owner.link}}">{{o.owner.display_name}}</a></td>
+                        <td>{{o.view_count}}</td>
+                        <td>{{o.creation_date}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+
     </main>
 {% endblock %}

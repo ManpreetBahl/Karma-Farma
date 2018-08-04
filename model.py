@@ -62,7 +62,9 @@ class AppModel(IModel):
     
     def getNoAnswerQuestions(self, site):
         page = 1
-        results = []
+        best = []
+        good = []
+        okay = []
         hasMore = True
         params = {
             "key": APIKEY,
@@ -79,16 +81,30 @@ class AppModel(IModel):
                 resJSON = res.json()
                 for item in resJSON['items']:
                     item['title'] = html.parser.unescape(item['title'])
-                    item['creation_date'] = datetime.fromtimestamp(item['creation_date'], timezone.utc).astimezone().strftime("%m-%d-%Y %H:%M:%S")
-                    results.append(item)
+                    item['owner']['display_name'] = html.parser.unescape(item['owner']['display_name'])
+
+                    viewCount = item['view_count'] 
+                    timedif = datetime.now() - datetime.fromtimestamp(item['creation_date'])
+                    difHours, remainder = divmod(timedif.total_seconds(), 3600)
+                    difMinutes, difSeconds = divmod(remainder, 60)
+
+                    item['creation_date'] = "Created {0} hours, {1} minutes, {2} seconds ago".format(int(difHours), int(difMinutes), int(difSeconds))
+
+                    #Filter the results based on view counts and how long has it been till it hasn't been answered
+                    if viewCount >= 50 and difMinutes < 240:
+                        best.append(item)
+                    elif viewCount >= 10 and viewCount < 50 and difMinutes < 60:
+                        good.append(item)
+                    else:
+                        okay.append(item)
+
                 hasMore = resJSON['has_more']
-                #hasMore = False
                 page += 1
             else:
                 print("An error has occured when making API call")
                 sys.exit(1)
 
-        return results
+        return (best,good,okay)
 
 if __name__ == "__main__":
     model = AppModel(None)
