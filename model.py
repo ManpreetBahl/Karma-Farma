@@ -19,27 +19,6 @@ class AppModel(IModel):
         """
         self.arg = app
     
-    def makeAPICall(self, url, params):
-        page = 1
-        results = []
-        hasMore = True
-
-        while hasMore:
-            params['page'] = page
-            res = requests.get(url, params=params)
-            if res.status_code == 200:
-                resJSON = res.json()
-                for item in resJSON['items']:
-                    item['name'] = html.parser.unescape(item['name'])
-                    results.append(item)
-                hasMore = resJSON['has_more']
-                page += 1
-            else:
-                print("An error has occured when making API call")
-                sys.exit(1)
-        
-        return results
-
     def getSites(self):
         page = 1
         results = []
