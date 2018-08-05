@@ -22,7 +22,7 @@ def home():
 @app.route("/stackexchange", methods=["GET", "POST"])
 def stackexchange():
     if request.method == "GET":
-        return render_template(presenter.getStackExchange(), sites=app.sites, questions=None)
+        return render_template(presenter.getStackExchange(), sites=app.sites)
     else:
         url, questions = presenter.getNoAnswerQuestions(request.form['site'])
         return render_template(url, sites=app.sites, best=questions[0], good=questions[1], okay=questions[2])

@@ -2,7 +2,7 @@ from IModel import IModel
 import requests
 import json
 import sys
-from defines import APIKEY
+from defines import APIKEY, FILTER
 import html.parser
 from datetime import datetime,timezone,time,timedelta
 
@@ -50,7 +50,8 @@ class AppModel(IModel):
             "order": "desc",
             "sort": "creation",
             "site": site,
-            "min": int((datetime.now() - timedelta(hours=12)).timestamp())
+            "min": int((datetime.now() - timedelta(hours=12)).timestamp()),
+            "filter": "withbody"
         }
 
         while hasMore:
@@ -58,6 +59,7 @@ class AppModel(IModel):
             res = requests.get(self.baseURL + "questions/no-answers", params=params)
             if res.status_code == 200:
                 resJSON = res.json()
+                print(resJSON)
                 for item in resJSON['items']:
                     item['title'] = html.parser.unescape(item['title'])
                     item['owner']['display_name'] = html.parser.unescape(item['owner']['display_name'])
