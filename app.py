@@ -29,6 +29,18 @@ def stackexchange():
 
 #=====================================================
 
+#====REDDIT=====
+@app.route("/redditaccess", methods=["GET", "POST"])
+def authReddit():
+    if request.method == "GET":
+        return redirect(presenter.userApproveApp())
+
+
+@app.route("/reddit", methods=["GET", "POST"])
+def getReddit():
+    if request.method == "GET":
+        return render_template('reddit.html', subreddits=presenter.getUserSubreddits(request.args.get('code')))
+
 #=================Start Server========================
 app.debug = True
 if __name__ == '__main__':

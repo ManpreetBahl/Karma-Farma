@@ -44,7 +44,6 @@
         <table class="table" id="goodTable">
             <thead>
                 <tr>
-                    <th></th>
                     <th>Question</th>
                     <th>Questioner</th>
                     <th>Views</th>
@@ -54,7 +53,6 @@
             <tbody>
                 {%for g in good%}
                     <tr>
-                        <td class="details-control"></td>
                         <td><a target="_blank" href="{{g.link}}">{{g.title}}</a></td>
                         <td><a target="_blank" href="{{g.owner.link}}">{{g.owner.display_name}}</a></td>
                         <td>{{g.view_count}}</td>

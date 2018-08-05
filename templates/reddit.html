@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<main role="main">
+    <form id="karmaForm" method="POST" action="/reddit">
+        <div class="form-group">
+            <label for="site">Please choose a subscribed subreddit</label>
+            <select class="form-control" id="site" name="site">
+                <option value="" disabled selected hidden>Choose a subreddit...</option>
+                {% for s in subreddits %}
+                <option value={{s}}>{{s}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" id="farm" class="btn btn-primary">Farm</button>
+    </form>
+</main>
+{% endblock %}

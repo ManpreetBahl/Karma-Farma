@@ -2,12 +2,15 @@ from IModel import IModel
 import requests
 import json
 import sys
-from defines import APIKEY, FILTER
+from defines import APIKEY, FILTER, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_CLIENT_REDIRECT_URI
 import html.parser
 from datetime import datetime,timezone,time,timedelta
 
+import praw
+
 class AppModel(IModel):
     baseURL = "https://api.stackexchange.com/2.2/"
+    reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID, client_secret=REDDIT_CLIENT_SECRET, redirect_uri=REDDIT_CLIENT_REDIRECT_URI, user_agent="Karma Farma")
 
     def __init__(self, app):
         """
@@ -59,7 +62,6 @@ class AppModel(IModel):
             res = requests.get(self.baseURL + "questions/no-answers", params=params)
             if res.status_code == 200:
                 resJSON = res.json()
-                print(resJSON)
                 for item in resJSON['items']:
                     item['title'] = html.parser.unescape(item['title'])
                     item['owner']['display_name'] = html.parser.unescape(item['owner']['display_name'])
@@ -87,7 +89,9 @@ class AppModel(IModel):
 
         return (best,good,okay)
 
-if __name__ == "__main__":
-    model = AppModel(None)
-    print(model.getSites())
-    print(model.getNoAnswerQuestions("stackoverflow", 1531180800, 1531267200))
+    def userApproveApp(self):
+        return self.reddit.auth.url(['*'], '...', 'permanent')
+    
+    def getUserSubreddits(self, code):
+        self.reddit.auth.authorize(code)
+        return list(self.reddit.user.subreddits(limit=None))

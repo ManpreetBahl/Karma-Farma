@@ -7,5 +7,5 @@ class IModel(ABC):
         pass
     
     @abstractmethod
-    def getNoAnswerQuestions(self, site, min, max):
+    def getNoAnswerQuestions(self, site):
         pass

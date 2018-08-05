@@ -21,3 +21,9 @@ class Presenter:
     
     def getNoAnswerQuestions(self, site):
         return ('stackexchange.html', self.model.getNoAnswerQuestions(site))
+
+    def userApproveApp(self):
+        return self.model.userApproveApp()
+    
+    def getUserSubreddits(self, code):
+        return self.model.getUserSubreddits(code)
