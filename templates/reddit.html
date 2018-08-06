@@ -5,7 +5,7 @@
     <form id="karmaForm" method="POST" action="/reddit">
         <div class="form-group">
             <label for="site">Please choose a subscribed subreddit</label>
-            <select class="form-control" id="site" name="site">
+            <select class="form-control" id="subreddit" name="subreddit">
                 <option value="" disabled selected hidden>Choose a subreddit...</option>
                 {% for s in subreddits %}
                 <option value={{s}}>{{s}}</option>
@@ -14,5 +14,23 @@
         </div>
         <button type="submit" id="farm" class="btn btn-primary">Farm</button>
     </form>
+    {% if submissions %}
+        <hr>
+        <h2>Reddit Posts for Karma</h2>
+        <table class="table" id="bestTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for s in submissions%}
+                    <tr>
+                        <td>{{s}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
 </main>
 {% endblock %}

@@ -27,3 +27,6 @@ class Presenter:
     
     def getUserSubreddits(self, code):
         return self.model.getUserSubreddits(code)
+    
+    def getSubredditNew(self, sr):
+        return self.model.getSubredditNew(sr)

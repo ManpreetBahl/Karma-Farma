@@ -95,3 +95,9 @@ class AppModel(IModel):
     def getUserSubreddits(self, code):
         self.reddit.auth.authorize(code)
         return list(self.reddit.user.subreddits(limit=None))
+    
+    def getSubredditNew(self, sr):
+        submissionTitles = list()
+        for submission in self.reddit.subreddit(sr).new():
+            submissionTitles.append(submission.title)
+        return list(submissionTitles)
