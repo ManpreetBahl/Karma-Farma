@@ -17,16 +17,20 @@
     {% if submissions %}
         <hr>
         <h2>Reddit Posts for Karma</h2>
-        <table class="table" id="bestTable">
+        <table class="table table-responsive table-hover" id="redditTable" data-escape="false">
             <thead>
                 <tr>
                     <th>Title</th>
+                    <th>Number of Comments</th>
+                    <th>Created On</th>
                 </tr>
             </thead>
             <tbody>
                 {%for s in submissions%}
                     <tr>
-                        <td>{{s}}</td>
+                        <td><a target="_blank" href="{{s.url}}">{{s.title}}</a></td>
+                        <td>{{s.num_comments}}</td>
+                        <td>{{s.created}}</td>
                     </tr>
                 {% endfor %}
             </tbody>

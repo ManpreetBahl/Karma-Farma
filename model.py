@@ -7,6 +7,7 @@ import html.parser
 from datetime import datetime,timezone,time,timedelta
 
 import praw
+import pendulum
 
 class AppModel(IModel):
     baseURL = "https://api.stackexchange.com/2.2/"
@@ -93,11 +94,22 @@ class AppModel(IModel):
         return self.reddit.auth.url(['*'], '...', 'permanent')
     
     def getUserSubreddits(self, code):
-        self.reddit.auth.authorize(code)
+        if code != None:
+            self.reddit.auth.authorize(code)
         return list(self.reddit.user.subreddits(limit=None))
     
     def getSubredditNew(self, sr):
-        submissionTitles = list()
+        submissions = list()
         for submission in self.reddit.subreddit(sr).new():
-            submissionTitles.append(submission.title)
-        return list(submissionTitles)
+            post = dict()
+            post['title'] = submission.title
+            post['num_comments'] = submission.num_comments
+            post['url'] = "https://www.reddit.com" + submission.permalink
+
+
+            dt = pendulum.from_timestamp(submission.created_utc)
+            post['created'] = dt.diff_for_humans(pendulum.now('UTC'), absolute=True) + " ago"
+
+            submissions.append(post)
+
+        return list(submissions)

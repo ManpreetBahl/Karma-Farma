@@ -42,7 +42,7 @@ def getReddit():
         return render_template('reddit.html', subreddits=presenter.getUserSubreddits(request.args.get('code')))
     else:
         newPosts = presenter.getSubredditNew(request.form['subreddit'])
-        return render_template('reddit.html', submissions=newPosts)
+        return render_template('reddit.html', subreddits=presenter.getUserSubreddits(code=None), submissions=newPosts)
 
 #=================Start Server========================
 app.debug = True
