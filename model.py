@@ -5,7 +5,6 @@ import json
 import sys
 from defines import APIKEY, FILTER, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_CLIENT_REDIRECT_URI
 import html.parser
-from datetime import datetime,timezone,time,timedelta
 
 import praw
 import pendulum
@@ -35,6 +34,7 @@ class AppModel(IModel):
         """
         self.arg = app
     
+    #==================Stack Exchange======================
     def getSites(self):
         """
         This method gets all available subsites on Stack Exchange
@@ -88,7 +88,7 @@ class AppModel(IModel):
             "order": "desc",
             "sort": "creation",
             "site": site,
-            "min": int((datetime.now() - timedelta(hours=12)).timestamp()),
+            "min": pendulum.now('UTC').subtract(hours=12).int_timestamp, #int((datetime.now() - timedelta(hours=12)).timestamp()),
             "filter": "withbody"
         }
 
@@ -103,18 +103,11 @@ class AppModel(IModel):
 
                     viewCount = item['view_count']
 
+                    #Parse the creation date using Pendulum
                     dt = pendulum.from_timestamp(item['creation_date'])
                     now = pendulum.now('UTC')
                     difMinutes = dt.diff(now).in_minutes()
                     item['creation_date'] = dt.diff_for_humans(now, absolute=True) + " ago"
-
-                    """
-                    timedif = datetime.now() - datetime.fromtimestamp(item['creation_date'])
-                    difHours, remainder = divmod(timedif.total_seconds(), 3600)
-                    difMinutes, difSeconds = divmod(remainder, 60)
-
-                    item['creation_date'] = "Created {0} hours, {1} minutes, {2} seconds ago".format(int(difHours), int(difMinutes), int(difSeconds))
-                    """
 
                     #Filter the results based on view counts and how long has it been till it hasn't been answered
                     if viewCount >= 50 and difMinutes < 240:
@@ -131,16 +124,50 @@ class AppModel(IModel):
                 sys.exit(1)
 
         return (best,good,okay)
+    #======================================================
 
+    #=====================Reddit===========================
     def userApproveApp(self):
+        """
+        This method provides the URL for the user to approve
+        the application to access their Reddit account.
+
+        Returns:
+            OAuth URL: Redirect URL for OAuth
+        """
         return self.reddit.auth.url(['*'], '...', 'permanent')
     
     def getUserSubreddits(self, code):
+        """
+        This method gets the authenticated user's subscribed
+        subreddits. The code parameter will be None if the
+        user has already been authenticated. See getReddit()
+        method in app.py for why this logic is here. 
+
+        Parameters:
+            code: The code given be Reddit after user finishes
+                  OAuth.
+
+        Returns:
+            List of user's subscribed subreddits.
+        """
         if code != None:
             self.reddit.auth.authorize(code)
         return list(self.reddit.user.subreddits(limit=None))
     
     def getSubredditNew(self, sr):
+        """
+        This method gets the newest posts in the specifed
+        subreddit.
+
+        Parameters:
+            sr: The subreddit to get new posts from
+
+        Returns:
+            List of dictionaries where each object contains
+            information about the post: title, number of comments
+            URL, and when it was created.
+        """
         submissions = list()
         for submission in self.reddit.subreddit(sr).new():
             post = dict()
@@ -154,3 +181,4 @@ class AppModel(IModel):
             submissions.append(post)
 
         return list(submissions)
+    #======================================================
