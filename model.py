@@ -1,3 +1,9 @@
+"""
+Copyright 2018 Manpreet Bahl
+[This program is licensed under the "MIT License"]
+Please see the file LICENSE in the source distribution 
+of this software for license terms.
+"""
 #======================Imports========================
 from IModel import IModel
 import requests
@@ -27,10 +33,9 @@ class AppModel(IModel):
     def __init__(self, app):
         """
 	    Initialization of the Model class
-	    @params
-	        Web app initialized by Flask
-	    return
-	        N/A
+
+	    Parameters:
+	        app: Web app initialized by Flask
         """
         self.arg = app
     
@@ -182,3 +187,4 @@ class AppModel(IModel):
 
         return list(submissions)
     #======================================================
+#=====================================================
