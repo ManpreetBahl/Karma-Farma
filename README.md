@@ -10,6 +10,7 @@ For Reddit, this application utilizes PRAW (Python Reddit API Wrapper) to intera
 It's important to note that this is a MVP (Minimal Viable Product). There are plans to enhance this application as detailed in the Future Work section.
 
 ##Build Instructions
+Section under construction...
 
 ## Future Work
 The current ideas for enchancements are:  
