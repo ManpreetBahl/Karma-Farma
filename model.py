@@ -5,7 +5,6 @@ Please see the file LICENSE in the source distribution
 of this software for license terms.
 """
 #======================Imports========================
-from IModel import IModel
 import requests
 import json
 import sys
@@ -17,7 +16,7 @@ import pendulum
 #=====================================================
 
 #====================AppModel=========================
-class AppModel(IModel):
+class AppModel():
     """
     This class extends the IModel abstract base class and
     interacts with both the Stack Exchange API and Reddit
