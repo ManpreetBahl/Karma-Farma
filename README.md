@@ -12,7 +12,7 @@ It's important to note that this is a MVP (Minimal Viable Product). There are pl
 ##Build Instructions
 
 ## Future Work
-The current ideas for enchancements are:
+The current ideas for enchancements are:  
 1. Incorporate OAuth for Stack Exchange.  
 2. Include viewer and text editor for both Stack Exchange and Reddit. The viewer will allow the user to see the contents of the post and the text editor will allow the user to submit a response to that post without having to go directly to Stack Exchange and/or Reddit.  
 3. Frontend UI design (colors, fonts, etc.).  
