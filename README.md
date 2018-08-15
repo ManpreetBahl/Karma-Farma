@@ -62,7 +62,10 @@ In order to start the Flask server locally, run the following command:
 python3 app.py
 ```  
 
-This will start the server on `localhost:8080`. If you want to deploy the application to the cloud, refer to the appropriate documentation for the cloud provider of your choice. Support and documentation for cloud deployment will be added to this application at a later time. 
+This will start the server on `localhost:8080`. Support and documentation for cloud deployment will be added to this application at a later time. If you want to deploy the application to the cloud, refer to the appropriate documentation for the cloud provider of your choice. 
+
+##Design
+Visit the [Design](https://bitbucket.org/TheManpreetBahl/karma-farma/wiki/Design) wiki for more information on critical components of the application.  
 
 ## Future Work
 The current ideas for enchancements are:  
