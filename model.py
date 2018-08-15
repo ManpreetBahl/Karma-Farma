@@ -8,7 +8,7 @@ of this software for license terms.
 import requests
 import json
 import sys
-from defines import APIKEY, FILTER, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_CLIENT_REDIRECT_URI
+from defines import APIKEY, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_CLIENT_REDIRECT_URI
 import html.parser
 
 import praw
@@ -114,9 +114,9 @@ class AppModel():
                     item['creation_date'] = dt.diff_for_humans(now, absolute=True) + " ago"
 
                     #Filter the results based on view counts and how long has it been till it hasn't been answered
-                    if viewCount >= 50 and difMinutes < 240:
+                    if viewCount >= 50 and difMinutes >= 240:
                         best.append(item)
-                    elif viewCount >= 10 and viewCount < 50 and difMinutes < 60:
+                    elif viewCount >= 10 and viewCount < 50 and difMinutes < 240:
                         good.append(item)
                     else:
                         okay.append(item)

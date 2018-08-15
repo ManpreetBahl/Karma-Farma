@@ -10,7 +10,20 @@ For Reddit, this application utilizes PRAW (Python Reddit API Wrapper) to intera
 It's important to note that this is a MVP (Minimal Viable Product). There are plans to enhance this application as detailed in the Future Work section.
 
 ##Build Instructions
-Section under construction...
+In order to build and run the application, you must first register with Stack Exchange and Reddit.
+For Stack Exchange, visit: [https://stackapps.com/apps/oauth/register](https://stackapps.com/apps/oauth/register)
+For Reddit, visit: [https://www.reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
+
+IMPORTANT: You will need a Stack Exchange and a Reddit account in order to create and register the application.
+
+Once you have registered on both Stack Exchange and Reddit, you will need to save the application credentials generated for you.
+Create a python file called ```defines.py``` with the following contents:
+```python
+APIKEY=<Stack Exchange API KEY>
+REDDIT_CLIENT_ID=<Reddit App ID>
+REDDIT_CLIENT_SECRET=<Reddit App Secret>
+REDDIT_CLIENT_REDIRECT_URI=<Reddit App Redirect URI>
+```
 
 ## Future Work
 The current ideas for enchancements are:  
